@@ -227,6 +227,19 @@
 		}
 	}
 
+	// Alcaldías base layer visibility
+	let alcaldiasVisible = $state(true);
+
+	function toggleAlcaldiasLayer() {
+		if (!map || !geoLayer) return;
+		if (alcaldiasVisible) {
+			geoLayer.remove();
+		} else {
+			geoLayer.addTo(map);
+		}
+		alcaldiasVisible = !alcaldiasVisible;
+	}
+
 	// Experience markers layer
 	let markersLayer: import('leaflet').LayerGroup | null = null;
 	let geoLayer: import('leaflet').GeoJSON | null = null;
@@ -420,6 +433,15 @@
 
 	<!-- Layer toggle buttons row -->
 	<div class="absolute top-3 left-3 z-1000 flex flex-wrap gap-2">
+		<button
+			onclick={toggleAlcaldiasLayer}
+			class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-700 shadow-md transition-all cursor-pointer hover:shadow-lg
+				{alcaldiasVisible ? 'bg-teal-700 text-white' : 'bg-white text-gray-700 border border-gray-200'}"
+		>
+			<span class="text-[13px]">🗺️</span>
+			{alcaldiasVisible ? 'Ocultar Alcaldías' : 'Ver Alcaldías'}
+		</button>
+
 		<button
 			onclick={toggleNseLayer}
 			disabled={nseLoading}
