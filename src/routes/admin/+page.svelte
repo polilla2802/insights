@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { alcaldias, experiencias } from '$lib/data/mock';
-	import { anunciosMock } from '$lib/data/ads-mock';
 </script>
 
 <svelte:head><title>Dashboard — ConoCé-DMX Admin</title></svelte:head>
@@ -12,11 +11,10 @@
 	</div>
 
 	<!-- Stats -->
-	<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+	<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
 		{#each [
 			{ label: 'Alcaldías', value: alcaldias.length, href: '/admin/alcaldias', color: 'bg-teal-950' },
 			{ label: 'Experiencias', value: experiencias.length, href: '/admin/experiencias', color: 'bg-magenta-600' },
-			{ label: 'Anuncios', value: anunciosMock.length, href: '/admin/anuncios', color: 'bg-gray-800' },
 			{ label: 'Reservas', value: 0, href: '#', color: 'bg-gray-400' }
 		] as stat}
 			<a href={stat.href} class="card p-5 hover:shadow-md transition-shadow">

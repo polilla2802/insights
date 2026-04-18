@@ -3,30 +3,9 @@
 	import MetricCard from '$lib/components/MetricCard.svelte';
 	import AlcaldiaCard from '$lib/components/AlcaldiaCard.svelte';
 	import ExperienceCard from '$lib/components/ExperienceCard.svelte';
-	import AdBanner from '$lib/components/AdBanner.svelte';
-	import AdCard from '$lib/components/AdCard.svelte';
-	import AdStrip from '$lib/components/AdStrip.svelte';
 	import { alcaldias, experiencias } from '$lib/data/mock';
-	import { getBanners, getAdCards, getStrips } from '$lib/data/ads-mock';
 
 	const destacadas = experiencias.filter((e) => e.destacada);
-	const banners = getBanners();
-	const adCards = getAdCards();
-	const strips = getStrips();
-
-	// Intercala AdCards en el grid: una ad cada 3 experiencias
-	type GridItem =
-		| { kind: 'exp'; data: (typeof destacadas)[number] }
-		| { kind: 'ad'; data: ReturnType<typeof getAdCards>[number] };
-
-	const gridItems: GridItem[] = [];
-	let adIdx = 0;
-	destacadas.forEach((exp, i) => {
-		gridItems.push({ kind: 'exp', data: exp });
-		if ((i + 1) % 3 === 0 && adIdx < adCards.length) {
-			gridItems.push({ kind: 'ad', data: adCards[adIdx++] });
-		}
-	});
 </script>
 
 <svelte:head>
@@ -35,21 +14,6 @@
 
 <!-- Hero -->
 <Hero />
-
-<!-- ── Pasarela de ads: Banners enterprise ─────────────────────────────── -->
-{#if banners.length > 0}
-<section class="max-w-7xl mx-auto px-4 md:px-6 pt-6 pb-2">
-	<div class="flex items-center justify-between mb-3">
-		<p class="text-xs font-bold tracking-widest uppercase text-gray-400">Partners Regionales</p>
-		<a href="/anunciarse" class="text-xs text-gray-400 hover:text-gray-600 transition-colors">¿Quieres anunciarte? →</a>
-	</div>
-	<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-		{#each banners as ad (ad.id)}
-			<AdBanner {ad} />
-		{/each}
-	</div>
-</section>
-{/if}
 
 <!-- Métricas de la ciudad -->
 <section class="bg-white border-b border-gray-100 mt-6">
@@ -106,14 +70,7 @@
 	</div>
 </section>
 
-<!-- ── Strip ad entre secciones ───────────────────────────────────────────── -->
-{#if strips[0]}
-<div class="max-w-7xl mx-auto px-4 md:px-6 pb-4">
-	<AdStrip ad={strips[0]} />
-</div>
-{/if}
-
-<!-- Experiencias Destacadas + AdCards intercaladas -->
+<!-- Experiencias Destacadas -->
 <section class="max-w-7xl mx-auto px-4 md:px-6 pb-10">
 	<div class="flex items-end justify-between mb-5">
 		<h2 class="text-xl font-bold text-gray-900">Experiencias Destacadas</h2>
@@ -123,33 +80,22 @@
 	</div>
 
 	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-		{#each gridItems as item (item.kind === 'exp' ? item.data.id : item.data.id)}
-			{#if item.kind === 'exp'}
-				<ExperienceCard
-					id={item.data.id}
-					titulo={item.data.titulo}
-					lugar={item.data.lugar}
-					alcaldia={item.data.alcaldia}
-					duracion={item.data.duracion}
-					precio={item.data.precio}
-					imagen={item.data.imagen}
-					rating={item.data.rating}
-					numResenas={item.data.numResenas}
-					tipo={item.data.tipo}
-				/>
-			{:else}
-				<AdCard ad={item.data} />
-			{/if}
+		{#each destacadas as exp (exp.id)}
+			<ExperienceCard
+				id={exp.id}
+				titulo={exp.titulo}
+				lugar={exp.lugar}
+				alcaldia={exp.alcaldia}
+				duracion={exp.duracion}
+				precio={exp.precio}
+				imagen={exp.imagen}
+				rating={exp.rating}
+				numResenas={exp.numResenas}
+				tipo={exp.tipo}
+			/>
 		{/each}
 	</div>
 </section>
-
-<!-- ── Strip ad 2 antes del CTA ───────────────────────────────────────────── -->
-{#if strips[1]}
-<div class="max-w-7xl mx-auto px-4 md:px-6 pb-4">
-	<AdStrip ad={strips[1]} />
-</div>
-{/if}
 
 <!-- CTA corporativo -->
 <section class="bg-teal-950 mx-4 md:mx-auto mb-8 rounded-2xl max-w-7xl px-6 py-10 text-center">

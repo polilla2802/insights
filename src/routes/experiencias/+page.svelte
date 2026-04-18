@@ -2,10 +2,7 @@
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import FilterPills from '$lib/components/FilterPills.svelte';
 	import ExperienceCard from '$lib/components/ExperienceCard.svelte';
-	import AdCard from '$lib/components/AdCard.svelte';
-	import AdStrip from '$lib/components/AdStrip.svelte';
 	import { experiencias, alcaldias, categorias } from '$lib/data/mock';
-	import { getAdCards, getStrips } from '$lib/data/ads-mock';
 
 	let busqueda = $state('');
 	let alcaldiaSeleccionada = $state('todos');
@@ -46,31 +43,6 @@
 			return matchBusqueda && matchAlcaldia && matchCategoria;
 		})
 	);
-
-	// Ads filtrados por alcaldía seleccionada
-	const adCards = $derived(
-		getAdCards(alcaldiaSeleccionada === 'todos' ? undefined : alcaldiaSeleccionada)
-	);
-	const strips = $derived(
-		getStrips(alcaldiaSeleccionada === 'todos' ? undefined : alcaldiaSeleccionada)
-	);
-
-	// Grid intercalado: 1 AdCard cada 4 experiencias
-	type GridItem =
-		| { kind: 'exp'; data: (typeof experiencias)[number] }
-		| { kind: 'ad'; data: ReturnType<typeof getAdCards>[number] };
-
-	const gridItems = $derived<GridItem[]>(() => {
-		const items: GridItem[] = [];
-		let adIdx = 0;
-		resultado.forEach((exp, i) => {
-			items.push({ kind: 'exp', data: exp });
-			if ((i + 1) % 4 === 0 && adIdx < adCards.length) {
-				items.push({ kind: 'ad', data: adCards[adIdx++] });
-			}
-		});
-		return items;
-	});
 </script>
 
 <svelte:head>
@@ -79,14 +51,9 @@
 
 <div class="max-w-7xl mx-auto px-4 md:px-6 py-6">
 	<!-- Header -->
-	<div class="flex items-start justify-between mb-6">
-		<div>
-			<h1 class="text-2xl font-bold text-gray-900 mb-1">Experiencias en CDMX</h1>
-			<p class="text-sm text-gray-500">Restaurantes, museos y eventos únicos por alcaldía</p>
-		</div>
-		<a href="/anunciarse" class="hidden md:block text-xs text-gray-400 hover:text-gray-600 transition-colors mt-1 whitespace-nowrap">
-			¿Anunciarte aquí? →
-		</a>
+	<div class="mb-6">
+		<h1 class="text-2xl font-bold text-gray-900 mb-1">Experiencias en CDMX</h1>
+		<p class="text-sm text-gray-500">Restaurantes, museos y eventos únicos por alcaldía</p>
 	</div>
 
 	<!-- Search -->
@@ -112,36 +79,25 @@
 		/>
 	</div>
 
-	<!-- Strip ad contextual (top, según alcaldía) -->
-	{#if strips[0]}
-		<div class="mb-6">
-			<AdStrip ad={strips[0]} />
-		</div>
-	{/if}
-
 	<!-- Resultados -->
 	{#if resultado.length > 0}
 		<p class="text-xs text-gray-400 mb-4">
 			{resultado.length} experiencia{resultado.length !== 1 ? 's' : ''} encontrada{resultado.length !== 1 ? 's' : ''}
 		</p>
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-			{#each gridItems() as item (item.kind + '-' + item.data.id)}
-				{#if item.kind === 'exp'}
-					<ExperienceCard
-						id={item.data.id}
-						titulo={item.data.titulo}
-						lugar={item.data.lugar}
-						alcaldia={item.data.alcaldia}
-						duracion={item.data.duracion}
-						precio={item.data.precio}
-						imagen={item.data.imagen}
-						rating={item.data.rating}
-						numResenas={item.data.numResenas}
-						tipo={item.data.tipo}
-					/>
-				{:else}
-					<AdCard ad={item.data} />
-				{/if}
+			{#each resultado as exp (exp.id)}
+				<ExperienceCard
+					id={exp.id}
+					titulo={exp.titulo}
+					lugar={exp.lugar}
+					alcaldia={exp.alcaldia}
+					duracion={exp.duracion}
+					precio={exp.precio}
+					imagen={exp.imagen}
+					rating={exp.rating}
+					numResenas={exp.numResenas}
+					tipo={exp.tipo}
+				/>
 			{/each}
 		</div>
 	{:else}
