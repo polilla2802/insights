@@ -100,3 +100,69 @@ enum EstadoReserva {
   CANCELADA
   COMPLETADA
 }
+
+// ── Pasarela de Ads Enterprise ──────────────────────────────────────────────
+
+model Empresa {
+  id          String     @id @default(cuid())
+  nombre      String
+  logo        String?
+  sitio       String?
+  descripcion String?
+  tier        TierEmpresa @default(STANDARD)
+  campanas    Campana[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+enum TierEmpresa {
+  STANDARD   // hasta $50k MXN/mes
+  PREMIUM    // hasta $200k MXN/mes
+  ENTERPRISE // presupuesto abierto
+}
+
+model Campana {
+  id            String       @id @default(cuid())
+  nombre        String
+  presupuesto   Float
+  fechaInicio   DateTime
+  fechaFin      DateTime
+  alcaldiaIds   String[]
+  estado        EstadoCampana @default(ACTIVA)
+  empresaId     String
+  empresa       Empresa      @relation(fields: [empresaId], references: [id])
+  anuncios      Anuncio[]
+  impresiones   Int          @default(0)
+  clics         Int          @default(0)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+enum EstadoCampana {
+  BORRADOR
+  ACTIVA
+  PAUSADA
+  FINALIZADA
+}
+
+model Anuncio {
+  id          String      @id @default(cuid())
+  tipo        TipoAnuncio
+  titulo      String
+  descripcion String?
+  imagen      String?
+  ctaLabel    String      @default("Conocer más")
+  ctaUrl      String
+  alcaldiaIds String[]
+  activo      Boolean     @default(true)
+  campanaId   String
+  campana     Campana     @relation(fields: [campanaId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+enum TipoAnuncio {
+  BANNER    // franja hero en landing
+  CARD      // tarjeta patrocinada en el grid de experiencias
+  STRIP     // banda horizontal entre secciones
+}
