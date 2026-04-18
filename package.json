@@ -46,9 +46,11 @@
 	},
 	"dependencies": {
 		"@iconify/svelte": "^5.2.1",
+		"@types/leaflet": "^1.9.21",
 		"dotenv": "^17.4.2",
 		"firebase": "^12.12.0",
 		"firebase-admin": "^13.8.0",
+		"leaflet": "^1.9.4",
 		"prisma": "^6.19.3",
 		"svelte-i18n": "^4.0.1"
 	}
