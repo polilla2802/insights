@@ -47,7 +47,7 @@
 	}
 </script>
 
-<svelte:head><title>Nueva experiencia — ConSearch Admin</title></svelte:head>
+<svelte:head><title>Nueva experiencia — ConoCé-DMX Admin</title></svelte:head>
 
 <div class="h-full flex flex-col">
 	<!-- Header -->

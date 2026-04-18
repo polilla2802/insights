@@ -2,7 +2,7 @@
 	import { experiencias, alcaldias } from '$lib/data/mock';
 </script>
 
-<svelte:head><title>Experiencias — ConSearch Admin</title></svelte:head>
+<svelte:head><title>Experiencias — ConoCé-DMX Admin</title></svelte:head>
 
 <div class="p-8">
 	<div class="flex items-center justify-between mb-8">

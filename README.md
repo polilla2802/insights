@@ -1,4 +1,4 @@
-# ConSearch — Experiencias CDMX
+# ConoCé-DMX — Experiencias CDMX
 
 Plataforma open source para descubrir restaurantes, museos, tours y eventos en la Ciudad de México, organizados por alcaldía. Incluye mapa interactivo con datos de densidad por zona, sistema de reservas y métricas urbanas.
 
@@ -31,7 +31,7 @@ Plataforma open source para descubrir restaurantes, museos, tours y eventos en l
 
 ## Vista general
 
-ConSearch segmenta la Ciudad de México por sus 16 alcaldías y expone experiencias curadas de gastronomía, cultura, turismo y actividades. Las funcionalidades principales son:
+ConoCé-DMX segmenta la Ciudad de México por sus 16 alcaldías y expone experiencias curadas de gastronomía, cultura, turismo y actividades. Las funcionalidades principales son:
 
 - **Mapa interactivo** — choropleth por densidad de experiencias con popups de detalle
 - **Explorador por alcaldía** — filtros por tipo de experiencia y búsqueda en tiempo real
@@ -98,7 +98,7 @@ Abre `.env.development` y completa cada valor:
 ```env
 # ── Base de datos ──────────────────────────────────────────────
 # Cadena de conexión a CockroachDB (incluye usuario, contraseña, cluster y base de datos)
-DATABASE_URL='postgresql://usuario:contraseña@host:26257/ConSearch?sslmode=verify-full'
+DATABASE_URL='postgresql://usuario:contraseña@host:26257/ConoCé-DMX?sslmode=verify-full'
 
 # ── Entorno ────────────────────────────────────────────────────
 APP_ENV=development
@@ -148,12 +148,12 @@ docker run -d \
 
 # Crea la base de datos
 docker exec -it cockroach ./cockroach sql --insecure \
-  -e "CREATE DATABASE ConSearch;"
+  -e "CREATE DATABASE ConoCé-DMX;"
 ```
 
 `DATABASE_URL` para esta opción:
 ```
-postgresql://root@localhost:26257/ConSearch?sslmode=disable
+postgresql://root@localhost:26257/ConoCé-DMX?sslmode=disable
 ```
 
 ### Migraciones y generación del cliente
@@ -189,8 +189,8 @@ Firebase se usa para autenticación de usuarios y almacenamiento de archivos. Pa
 
 ```bash
 # 1. Clona el repositorio
-git clone https://github.com/tu-usuario/ConSearch-cdmx.git
-cd ConSearch-cdmx
+git clone https://github.com/tu-usuario/ConoCé-DMX-cdmx.git
+cd ConoCé-DMX-cdmx
 
 # 2. Instala las dependencias
 npm install
@@ -236,7 +236,7 @@ Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
 ## Estructura del proyecto
 
 ```
-ConSearch-cdmx/
+ConoCé-DMX-cdmx/
 ├── prisma/
 │   └── schema.prisma          # Modelos de base de datos
 ├── src/
@@ -355,7 +355,7 @@ Por favor asegúrate de que tu código pase `npm run check` y `npm run lint` ant
 Este proyecto está licenciado bajo la [MIT License](LICENSE).
 
 ```
-MIT License — Copyright (c) 2025 ConSearch CDMX Contributors
+MIT License — Copyright (c) 2025 ConoCé-DMX CDMX Contributors
 ```
 
 Puedes usar, copiar, modificar, distribuir y sublicenciar este software libremente, con o sin modificaciones, siempre que incluyas el aviso de copyright original.

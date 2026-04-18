@@ -35,7 +35,7 @@
 	}
 </script>
 
-<svelte:head><title>Editar {alcaldia?.nombre ?? slug} — ConSearch Admin</title></svelte:head>
+<svelte:head><title>Editar {alcaldia?.nombre ?? slug} — ConoCé-DMX Admin</title></svelte:head>
 
 <div class="h-full flex flex-col">
 	<div class="px-8 py-5 border-b border-gray-100 bg-white flex items-center justify-between shrink-0">

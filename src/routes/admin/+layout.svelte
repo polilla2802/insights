@@ -44,7 +44,7 @@
 						<circle cx="12" cy="10" r="3"/>
 					</svg>
 				</div>
-				<span class="text-white font-bold text-sm">ConSearch</span>
+				<span class="text-white font-bold text-sm">ConoCé-DMX</span>
 			</a>
 			<p class="text-white/40 text-xs mt-1 ml-9">Admin</p>
 		</div>

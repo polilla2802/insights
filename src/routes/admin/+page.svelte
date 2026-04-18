@@ -3,12 +3,12 @@
 	import { anunciosMock } from '$lib/data/ads-mock';
 </script>
 
-<svelte:head><title>Dashboard — ConSearch Admin</title></svelte:head>
+<svelte:head><title>Dashboard — ConoCé-DMX Admin</title></svelte:head>
 
 <div class="p-8">
 	<div class="mb-8">
 		<h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-		<p class="text-sm text-gray-500 mt-1">Gestión de contenidos de ConSearch CDMX</p>
+		<p class="text-sm text-gray-500 mt-1">Gestión de contenidos de ConoCé-DMX</p>
 	</div>
 
 	<!-- Stats -->

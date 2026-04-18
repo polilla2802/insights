@@ -6,7 +6,7 @@
 	);
 </script>
 
-<svelte:head><title>Alcaldías — ConSearch Admin</title></svelte:head>
+<svelte:head><title>Alcaldías — ConoCé-DMX Admin</title></svelte:head>
 
 <div class="p-8">
 	<div class="flex items-center justify-between mb-8">

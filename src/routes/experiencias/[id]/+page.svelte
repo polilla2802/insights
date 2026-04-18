@@ -24,7 +24,7 @@
 </script>
 
 <svelte:head>
-	<title>{exp ? `${exp.titulo} — ConSearch CDMX` : 'Experiencia — ConSearch CDMX'}</title>
+	<title>{exp ? `${exp.titulo} — ConoCé-DMX` : 'Experiencia — ConoCé-DMX'}</title>
 </svelte:head>
 
 {#if exp}

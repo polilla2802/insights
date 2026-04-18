@@ -74,7 +74,7 @@
 </script>
 
 <svelte:head>
-	<title>Experiencias — ConSearch CDMX</title>
+	<title>Experiencias — ConoCé-DMX</title>
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 md:px-6 py-6">

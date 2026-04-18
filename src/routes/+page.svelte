@@ -30,7 +30,7 @@
 </script>
 
 <svelte:head>
-	<title>ConSearch — Experiencias en CDMX</title>
+	<title>ConoCé-DMX — Experiencias en CDMX</title>
 </svelte:head>
 
 <!-- Hero -->

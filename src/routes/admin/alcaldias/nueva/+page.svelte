@@ -47,7 +47,7 @@
 	}, null, 2) : '');
 </script>
 
-<svelte:head><title>Nueva alcaldía — ConSearch Admin</title></svelte:head>
+<svelte:head><title>Nueva alcaldía — ConoCé-DMX Admin</title></svelte:head>
 
 <div class="h-full flex flex-col">
 	<!-- Header -->
