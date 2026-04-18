@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head>
-	<title>Metrópoli — Experiencias en CDMX</title>
+	<title>ConSearch — Experiencias en CDMX</title>
 </svelte:head>
 
 <!-- Hero -->

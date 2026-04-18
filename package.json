@@ -1,7 +1,13 @@
 {
-	"name": "insights",
-	"private": true,
-	"version": "1.0.0+1",
+	"name": "consearch",
+	"private": false,
+	"version": "1.0.0",
+	"license": "MIT",
+	"description": "Plataforma open source de experiencias en CDMX organizada por alcaldía — ConSearch",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/tu-usuario/consearch"
+	},
 	"type": "module",
 	"scripts": {
 		"dev": "dotenv -e .env.development -- vite --mode development",

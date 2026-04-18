@@ -28,7 +28,7 @@
 </script>
 
 <svelte:head>
-	<title>Mapa de Experiencias — Metrópoli CDMX</title>
+	<title>Mapa de Experiencias — ConSearch CDMX</title>
 </svelte:head>
 
 <!-- Top bar con stats -->

@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Alcaldías — Metrópoli CDMX</title>
+	<title>Alcaldías — ConSearch CDMX</title>
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 md:px-6 py-8">

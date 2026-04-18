@@ -25,7 +25,7 @@
 </script>
 
 <svelte:head>
-	<title>{alcaldia?.nombre ?? 'Alcaldía'} — Metrópoli CDMX</title>
+	<title>{alcaldia?.nombre ?? 'Alcaldía'} — ConSearch CDMX</title>
 </svelte:head>
 
 <!-- Header alcaldía -->

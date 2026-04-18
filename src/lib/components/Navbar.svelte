@@ -11,7 +11,7 @@
 					<circle cx="12" cy="10" r="3"/>
 				</svg>
 			</div>
-			<span class="font-bold text-gray-900 text-sm tracking-tight">Metrópoli</span>
+			<span class="font-bold text-gray-900 text-sm tracking-tight">ConSearch</span>
 		</a>
 
 		<nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">

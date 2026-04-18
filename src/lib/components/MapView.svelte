@@ -112,7 +112,7 @@
 						Reservar
 					</a>
 				</div>
-			`, { maxWidth: 240, className: 'metropoli-popup' });
+			`, { maxWidth: 240, className: 'consearch-popup' });
 
 			markersLayer!.addLayer(marker);
 		});
@@ -157,7 +157,7 @@
 						<strong style="font-size:13px;">${nombre}</strong><br/>
 						<span style="font-size:11px;color:#6b7280;">${count} experiencia${count !== 1 ? 's' : ''}</span>
 					</div>
-				`, { sticky: true, direction: 'top', className: 'metropoli-tooltip' });
+				`, { sticky: true, direction: 'top', className: 'consearch-tooltip' });
 
 				layer.on('mouseover', () => {
 					if (slug !== selectedSlug) {
@@ -237,19 +237,19 @@
 <div bind:this={mapEl} class="w-full h-full min-h-[400px] z-0"></div>
 
 <style>
-	:global(.metropoli-popup .leaflet-popup-content-wrapper) {
+	:global(.consearch-popup .leaflet-popup-content-wrapper) {
 		border-radius: 12px;
 		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
 		padding: 0;
 		overflow: hidden;
 	}
-	:global(.metropoli-popup .leaflet-popup-content) {
+	:global(.consearch-popup .leaflet-popup-content) {
 		margin: 12px;
 	}
-	:global(.metropoli-popup .leaflet-popup-tip-container) {
+	:global(.consearch-popup .leaflet-popup-tip-container) {
 		display: none;
 	}
-	:global(.metropoli-tooltip .leaflet-tooltip) {
+	:global(.consearch-tooltip .leaflet-tooltip) {
 		border-radius: 8px;
 		border: none;
 		box-shadow: 0 2px 12px rgba(0,0,0,0.12);
