@@ -13,6 +13,6 @@
 		"isolatedModules": true,
 		"noEmit": true
 	},
-	"include": ["src/**/*.ts", "src/**/*.svelte"],
+	"include": [".svelte-kit/ambient.d.ts", ".svelte-kit/non-ambient.d.ts", "src/**/*.ts", "src/**/*.svelte"],
 	"exclude": ["node_modules"]
 }

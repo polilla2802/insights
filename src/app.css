@@ -1,1 +1,52 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-teal-950: #082e2e;
+  --color-teal-900: #0d3d3d;
+  --color-teal-800: #134f4f;
+  --color-teal-700: #1a6464;
+  --color-magenta-600: #d4006a;
+  --color-magenta-500: #e8007a;
+  --color-magenta-400: #f0339a;
+  --color-surface: #f7f7f7;
+  --color-card: #ffffff;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --radius-card: 1rem;
+  --radius-pill: 9999px;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: #1a1a1a;
+  }
+}
+
+@layer utilities {
+  .btn-primary {
+    @apply bg-magenta-600 hover:bg-magenta-500 text-white font-semibold px-5 py-2.5 rounded-full transition-colors duration-200;
+  }
+
+  .btn-outline {
+    @apply border border-white/50 hover:border-white text-white font-semibold px-5 py-2.5 rounded-full transition-colors duration-200;
+  }
+
+  .pill {
+    @apply px-4 py-1.5 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-700 cursor-pointer transition-all duration-200 whitespace-nowrap;
+  }
+
+  .pill-active {
+    @apply bg-teal-950 text-white border-teal-950;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+}

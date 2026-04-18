@@ -9,3 +9,94 @@ datasource db {
   provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
+
+model Alcaldia {
+  id           String        @id @default(cuid())
+  nombre       String
+  slug         String        @unique
+  descripcion  String?
+  imagen       String?
+  lat          Float?
+  lng          Float?
+  experiencias Experiencia[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Categoria {
+  id           String        @id @default(cuid())
+  nombre       String
+  slug         String        @unique
+  icono        String?
+  experiencias Experiencia[]
+}
+
+model Experiencia {
+  id          String          @id @default(cuid())
+  titulo      String
+  descripcion String
+  precio      Float
+  duracion    Int
+  imagen      String?
+  imagenes    String[]
+  tipo        TipoExperiencia
+  lugar       String?
+  direccion   String?
+  rating      Float           @default(0)
+  numResenas  Int             @default(0)
+  destacada   Boolean         @default(false)
+  activa      Boolean         @default(true)
+  alcaldiaId  String
+  alcaldia    Alcaldia        @relation(fields: [alcaldiaId], references: [id])
+  categoriaId String
+  categoria   Categoria       @relation(fields: [categoriaId], references: [id])
+  reservas    Reserva[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+enum TipoExperiencia {
+  RESTAURANTE
+  MUSEO
+  EVENTO
+  TOUR
+  ACTIVIDAD
+}
+
+model Usuario {
+  id        String    @id @default(cuid())
+  nombre    String
+  email     String    @unique
+  foto      String?
+  rol       Rol       @default(VISITANTE)
+  reservas  Reserva[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+enum Rol {
+  VISITANTE
+  HOST
+  ADMIN
+}
+
+model Reserva {
+  id            String        @id @default(cuid())
+  personas      Int           @default(1)
+  fecha         DateTime
+  total         Float
+  estado        EstadoReserva @default(PENDIENTE)
+  experienciaId String
+  experiencia   Experiencia   @relation(fields: [experienciaId], references: [id])
+  usuarioId     String
+  usuario       Usuario       @relation(fields: [usuarioId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+enum EstadoReserva {
+  PENDIENTE
+  CONFIRMADA
+  CANCELADA
+  COMPLETADA
+}
