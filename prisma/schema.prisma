@@ -18,6 +18,7 @@ model Alcaldia {
   imagen       String?
   lat          Float?
   lng          Float?
+  poligono     Json?
   experiencias Experiencia[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt

@@ -3,9 +3,8 @@
 	import MetricCard from '$lib/components/MetricCard.svelte';
 	import AlcaldiaCard from '$lib/components/AlcaldiaCard.svelte';
 	import ExperienceCard from '$lib/components/ExperienceCard.svelte';
-	import { alcaldias, experiencias } from '$lib/data/mock';
 
-	const destacadas = experiencias.filter((e) => e.destacada);
+	let { data } = $props();
 </script>
 
 <svelte:head>
@@ -60,11 +59,12 @@
 	</div>
 
 	<div class="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
-		{#each alcaldias as alcaldia}
+		{#each data.alcaldias as alcaldia}
 			<AlcaldiaCard
 				nombre={alcaldia.nombre}
 				slug={alcaldia.slug}
-				numExperiencias={alcaldia.numExperiencias}
+				imagen={alcaldia.imagen ?? undefined}
+				numExperiencias={alcaldia._count.experiencias}
 			/>
 		{/each}
 	</div>
@@ -80,15 +80,15 @@
 	</div>
 
 	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-		{#each destacadas as exp (exp.id)}
+		{#each data.destacadas as exp (exp.id)}
 			<ExperienceCard
 				id={exp.id}
 				titulo={exp.titulo}
-				lugar={exp.lugar}
-				alcaldia={exp.alcaldia}
+				lugar={exp.lugar ?? ''}
+				alcaldia={exp.alcaldia.nombre}
 				duracion={exp.duracion}
 				precio={exp.precio}
-				imagen={exp.imagen}
+				imagen={exp.imagen ?? ''}
 				rating={exp.rating}
 				numResenas={exp.numResenas}
 				tipo={exp.tipo}

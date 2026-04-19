@@ -1,12 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import ExperienceCard from '$lib/components/ExperienceCard.svelte';
 	import FilterPills from '$lib/components/FilterPills.svelte';
-	import { experiencias, alcaldias } from '$lib/data/mock';
 
-	const slug = $derived(page.params.slug);
-	const alcaldia = $derived(alcaldias.find((a) => a.slug === slug));
-	const exps = $derived(experiencias.filter((e) => e.alcaldiaSlug === slug));
+	let { data } = $props();
 
 	const tipos = [
 		{ label: 'Todo', value: 'todos' },
@@ -20,12 +16,14 @@
 	let tipoSeleccionado = $state('todos');
 
 	const resultado = $derived(
-		exps.filter((e) => tipoSeleccionado === 'todos' || e.tipo === tipoSeleccionado)
+		data.experiencias.filter((e: { tipo: string }) =>
+			tipoSeleccionado === 'todos' || e.tipo === tipoSeleccionado
+		)
 	);
 </script>
 
 <svelte:head>
-	<title>{alcaldia?.nombre ?? 'Alcaldía'} — ConoCé-DMX</title>
+	<title>{data.alcaldia.nombre} — ConoCé-DMX</title>
 </svelte:head>
 
 <!-- Header alcaldía -->
@@ -34,8 +32,8 @@
 		<a href="/alcaldias" class="text-white/60 text-sm hover:text-white transition-colors mb-3 inline-flex items-center gap-1">
 			← Todas las alcaldías
 		</a>
-		<h1 class="text-3xl font-bold text-white">{alcaldia?.nombre ?? slug}</h1>
-		<p class="text-white/60 text-sm mt-1">{exps.length} experiencias disponibles</p>
+		<h1 class="text-3xl font-bold text-white">{data.alcaldia.nombre}</h1>
+		<p class="text-white/60 text-sm mt-1">{data.experiencias.length} experiencias disponibles</p>
 	</div>
 </div>
 
@@ -55,11 +53,11 @@
 				<ExperienceCard
 					id={exp.id}
 					titulo={exp.titulo}
-					lugar={exp.lugar}
-					alcaldia={exp.alcaldia}
+					lugar={exp.lugar ?? ''}
+					alcaldia={exp.alcaldia.nombre}
 					duracion={exp.duracion}
 					precio={exp.precio}
-					imagen={exp.imagen}
+					imagen={exp.imagen ?? ''}
 					rating={exp.rating}
 					numResenas={exp.numResenas}
 					tipo={exp.tipo}

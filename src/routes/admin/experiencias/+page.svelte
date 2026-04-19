@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { experiencias, alcaldias } from '$lib/data/mock';
+	let { data } = $props();
 </script>
 
 <svelte:head><title>Experiencias — ConoCé-DMX Admin</title></svelte:head>
@@ -8,7 +8,7 @@
 	<div class="flex items-center justify-between mb-8">
 		<div>
 			<h1 class="text-2xl font-bold text-gray-900">Experiencias</h1>
-			<p class="text-sm text-gray-500 mt-1">{experiencias.length} experiencias en la plataforma</p>
+			<p class="text-sm text-gray-500 mt-1">{data.experiencias.length} experiencias en la plataforma</p>
 		</div>
 		<a href="/admin/experiencias/nueva" class="btn-primary text-sm">+ Nueva experiencia</a>
 	</div>
@@ -25,7 +25,7 @@
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-gray-50">
-				{#each experiencias as exp}
+				{#each data.experiencias as exp}
 					<tr class="hover:bg-gray-50 transition-colors">
 						<td class="px-5 py-3.5">
 							<div class="flex items-center gap-3">
@@ -36,7 +36,7 @@
 								</div>
 							</div>
 						</td>
-						<td class="px-5 py-3.5 text-gray-600">{exp.alcaldia}</td>
+						<td class="px-5 py-3.5 text-gray-600">{exp.alcaldia.nombre}</td>
 						<td class="px-5 py-3.5">
 							<span class="text-xs font-semibold px-2 py-1 rounded-full bg-teal-50 text-teal-700">{exp.tipo}</span>
 						</td>

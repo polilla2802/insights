@@ -1,20 +1,19 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import MapDrawer from '$lib/components/MapDrawer.svelte';
-	import { alcaldias } from '$lib/data/mock';
-	import { alcaldiasGeo } from '$lib/data/cdmx-geo';
 
-	const slug = $derived(page.params.slug);
-	const alcaldia = $derived(alcaldias.find(a => a.slug === slug));
-	const geoData = $derived(alcaldiasGeo.find(a => a.slug === slug));
+	let { data } = $props();
 
-	let nombre = $state(alcaldia?.nombre ?? '');
-	let descripcion = $state('');
-	let imagen = $state('');
+	const slug = data.alcaldia.slug;
+
+	let nombre = $state(data.alcaldia.nombre);
+	let descripcion = $state(data.alcaldia.descripcion ?? '');
+	let imagen = $state(data.alcaldia.imagen ?? '');
 	let saved = $state(false);
 
+	const geoData = data.alcaldiasGeo.find((a: { slug: string }) => a.slug === slug);
+
 	let polygon = $state<[number, number][]>(
-		geoData?.polygon.map(([lng, lat]) => [lat, lng] as [number, number]) ?? []
+		geoData?.polygon.map(([lng, lat]: [number, number]) => [lat, lng] as [number, number]) ?? []
 	);
 	let centroid = $state<[number, number]>([geoData?.lat ?? 0, geoData?.lng ?? 0]);
 
@@ -35,7 +34,7 @@
 	}
 </script>
 
-<svelte:head><title>Editar {alcaldia?.nombre ?? slug} — ConoCé-DMX Admin</title></svelte:head>
+<svelte:head><title>Editar {data.alcaldia.nombre} — ConoCé-DMX Admin</title></svelte:head>
 
 <div class="h-full flex flex-col">
 	<div class="px-8 py-5 border-b border-gray-100 bg-white flex items-center justify-between shrink-0">
@@ -43,7 +42,7 @@
 			<a href="/admin/alcaldias" class="text-gray-400 hover:text-gray-700 transition-colors">
 				<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
 			</a>
-			<h1 class="text-lg font-bold text-gray-900">Editar — {alcaldia?.nombre ?? slug}</h1>
+			<h1 class="text-lg font-bold text-gray-900">Editar — {data.alcaldia.nombre}</h1>
 		</div>
 		<button onclick={handleSave} disabled={!canSave} class="btn-primary text-sm disabled:opacity-40 disabled:cursor-not-allowed">
 			{saved ? '✓ Guardado' : 'Guardar cambios'}
@@ -96,7 +95,7 @@
 
 		<!-- Map con polígono pre-cargado -->
 		<div class="flex-1 min-w-0">
-			<MapDrawer initialPolygon={polygon} onchange={handleZona} />
+			<MapDrawer alcaldiasGeo={data.alcaldiasGeo} initialPolygon={polygon} onchange={handleZona} />
 		</div>
 	</div>
 </div>

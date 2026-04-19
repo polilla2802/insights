@@ -1,9 +1,5 @@
 <script lang="ts">
-	import { alcaldias, experiencias } from '$lib/data/mock';
-
-	const expPorAlcaldia = Object.fromEntries(
-		alcaldias.map(a => [a.slug, experiencias.filter(e => e.alcaldiaSlug === a.slug).length])
-	);
+	let { data } = $props();
 </script>
 
 <svelte:head><title>Alcaldías — ConoCé-DMX Admin</title></svelte:head>
@@ -12,7 +8,7 @@
 	<div class="flex items-center justify-between mb-8">
 		<div>
 			<h1 class="text-2xl font-bold text-gray-900">Alcaldías</h1>
-			<p class="text-sm text-gray-500 mt-1">{alcaldias.length} demarcaciones configuradas</p>
+			<p class="text-sm text-gray-500 mt-1">{data.alcaldias.length} demarcaciones configuradas</p>
 		</div>
 		<a href="/admin/alcaldias/nueva" class="btn-primary text-sm">+ Nueva alcaldía</a>
 	</div>
@@ -28,13 +24,13 @@
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-gray-50">
-				{#each alcaldias as a}
+				{#each data.alcaldias as a}
 					<tr class="hover:bg-gray-50 transition-colors">
 						<td class="px-5 py-3.5 font-medium text-gray-900">{a.nombre}</td>
 						<td class="px-5 py-3.5 font-mono text-gray-400 text-xs">{a.slug}</td>
 						<td class="px-5 py-3.5 text-center">
 							<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-teal-50 text-teal-700 text-xs font-bold">
-								{expPorAlcaldia[a.slug] ?? 0}
+								{a._count.experiencias}
 							</span>
 						</td>
 						<td class="px-5 py-3.5 text-right">

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { alcaldias, categorias } from '$lib/data/mock';
+
+	let { data } = $props();
 
 	// Pre-seleccionar alcaldía si viene por query param
 	const alcaldiaParam = $derived(page.url.searchParams.get('alcaldia') ?? '');
@@ -98,7 +99,7 @@
 						<select id="alcaldia" bind:value={alcaldiaId}
 							class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 bg-white">
 							<option value="">Selecciona alcaldía…</option>
-							{#each alcaldias as a}
+							{#each data.alcaldias as a}
 								<option value={a.slug}>{a.nombre}</option>
 							{/each}
 						</select>
@@ -109,7 +110,7 @@
 						<select id="categoria" bind:value={categoriaId}
 							class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-950/20 focus:border-teal-950 bg-white">
 							<option value="">Sin categoría</option>
-							{#each categorias as c}
+							{#each data.categorias as c}
 								<option value={c.id}>{c.nombre}</option>
 							{/each}
 						</select>

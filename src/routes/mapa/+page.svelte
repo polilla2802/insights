@@ -1,12 +1,10 @@
 <script lang="ts">
 	import MapView from '$lib/components/MapView.svelte';
 	import MapSidePanel from '$lib/components/MapSidePanel.svelte';
-	import { experiencias, alcaldias } from '$lib/data/mock';
+
+	let { data } = $props();
 
 	let selectedSlug = $state<string | null>(null);
-
-	const totalExps = experiencias.length;
-	const totalAlcaldias = alcaldias.length;
 
 	function handleSelect(slug: string | null) {
 		selectedSlug = slug;
@@ -16,7 +14,6 @@
 		selectedSlug = null;
 	}
 
-	// Legend steps
 	const legendSteps = [
 		{ label: 'Sin exp.', color: '#e5e7eb' },
 		{ label: '1–5', color: '#ccfbf1' },
@@ -37,7 +34,7 @@
 		<div>
 			<h1 class="text-base font-bold text-gray-900 leading-tight">Mapa de Experiencias CDMX</h1>
 			<p class="text-xs text-gray-500">
-				{totalExps} experiencias en {totalAlcaldias} alcaldías — haz clic para explorar
+				{data.experiencias.length} experiencias en {data.alcaldias.length} alcaldías — haz clic para explorar
 			</p>
 		</div>
 
@@ -60,8 +57,17 @@
 
 <!-- Map container -->
 <div class="relative" style="height: calc(100vh - 120px);">
-	<MapView onAlcaldiaSelect={handleSelect} />
-	<MapSidePanel slug={selectedSlug} onclose={handleClose} />
+	<MapView
+		alcaldiasGeo={data.alcaldiasGeo}
+		experiencias={data.experiencias}
+		onAlcaldiaSelect={handleSelect}
+	/>
+	<MapSidePanel
+		slug={selectedSlug}
+		alcaldias={data.alcaldias}
+		experiencias={data.experiencias}
+		onclose={handleClose}
+	/>
 
 	<!-- Mobile: selected alcaldía badge -->
 	{#if selectedSlug}
@@ -70,7 +76,7 @@
 				href="/alcaldias/{selectedSlug}"
 				class="btn-primary w-full block text-center text-sm"
 			>
-				Ver experiencias en {alcaldias.find(a => a.slug === selectedSlug)?.nombre} →
+				Ver experiencias en {data.alcaldias.find((a: { slug: string }) => a.slug === selectedSlug)?.nombre} →
 			</a>
 		</div>
 	{/if}

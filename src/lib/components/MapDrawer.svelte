@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { alcaldiasGeo, buildGeoJSON } from '$lib/data/cdmx-geo';
+	import { buildGeoJSON } from '$lib/utils/geo';
+	import type { AlcaldiaGeo } from '$lib/utils/geo';
 
 	interface Props {
-		// Polígono inicial (para edición)
+		alcaldiasGeo?: AlcaldiaGeo[];
 		initialPolygon?: [number, number][];
-		// Callback cuando el polígono cambia
 		onchange?: (polygon: [number, number][], centroid: [number, number]) => void;
 	}
 
-	let { initialPolygon = [], onchange }: Props = $props();
+	let { alcaldiasGeo = [], initialPolygon = [], onchange }: Props = $props();
 
 	let mapEl: HTMLDivElement;
 	let L: typeof import('leaflet') | null = null;

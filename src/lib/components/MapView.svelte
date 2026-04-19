@@ -1,14 +1,27 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { alcaldiasGeo, buildGeoJSON } from '$lib/data/cdmx-geo';
-	import { experiencias } from '$lib/data/mock';
-	import type { AlcaldiaGeo } from '$lib/data/cdmx-geo';
+	import { buildGeoJSON } from '$lib/utils/geo';
+	import type { AlcaldiaGeo } from '$lib/utils/geo';
+
+	interface Experiencia {
+		id: string;
+		titulo: string;
+		lugar: string | null;
+		imagen: string | null;
+		precio: number;
+		rating: number;
+		numResenas: number;
+		tipo: string;
+		alcaldia: { slug: string; nombre: string };
+	}
 
 	interface Props {
+		alcaldiasGeo: AlcaldiaGeo[];
+		experiencias: Experiencia[];
 		onAlcaldiaSelect?: (slug: string | null) => void;
 	}
 
-	let { onAlcaldiaSelect }: Props = $props();
+	let { alcaldiasGeo, experiencias, onAlcaldiaSelect }: Props = $props();
 
 	let mapEl: HTMLDivElement;
 	let map: import('leaflet').Map | null = null;
@@ -19,7 +32,7 @@
 	const expCount = Object.fromEntries(
 		alcaldiasGeo.map((a) => [
 			a.slug,
-			experiencias.filter((e) => e.alcaldiaSlug === a.slug).length
+			experiencias.filter((e) => e.alcaldia.slug === a.slug).length
 		])
 	);
 
@@ -249,7 +262,7 @@
 		markersLayer?.clearLayers();
 		markersLayer = L.layerGroup().addTo(map);
 
-		const alcaldiaExps = experiencias.filter((e) => e.alcaldiaSlug === slug);
+		const alcaldiaExps = experiencias.filter((e) => e.alcaldia.slug === slug);
 		const geo = alcaldiasGeo.find((a) => a.slug === slug);
 		if (!geo) return;
 

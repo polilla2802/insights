@@ -2,40 +2,41 @@
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import FilterPills from '$lib/components/FilterPills.svelte';
 	import ExperienceCard from '$lib/components/ExperienceCard.svelte';
-	import { experiencias, alcaldias, categorias } from '$lib/data/mock';
+
+	let { data } = $props();
 
 	let busqueda = $state('');
 	let alcaldiaSeleccionada = $state('todos');
 	let categoriaSeleccionada = $state('todos');
 
-	const alcaldiaFiltros = [
+	const alcaldiaFiltros = $derived([
 		{ label: 'Todas', value: 'todos' },
-		...alcaldias.map((a) => ({ label: a.nombre, value: a.slug }))
-	];
+		...data.alcaldias.map((a: { nombre: string; slug: string }) => ({ label: a.nombre, value: a.slug }))
+	]);
 
-	const categoriaFiltros = [
+	const categoriaFiltros = $derived([
 		{ label: 'Todo', value: 'todos' },
-		...categorias.map((c) => ({ label: c.nombre, value: c.slug }))
-	];
+		...data.categorias.map((c: { nombre: string; slug: string }) => ({ label: c.nombre, value: c.slug }))
+	]);
 
 	const tipoToSlug: Record<string, string> = {
 		RESTAURANTE: 'gastronomia',
-		MUSEO: 'cultura',
-		TOUR: 'tours',
-		EVENTO: 'eventos',
-		ACTIVIDAD: 'actividades'
+		MUSEO:       'cultura',
+		TOUR:        'tours',
+		EVENTO:      'eventos',
+		ACTIVIDAD:   'actividades'
 	};
 
 	const resultado = $derived(
-		experiencias.filter((e) => {
+		data.experiencias.filter((e: { titulo: string; lugar: string | null; alcaldia: { nombre: string; slug: string }; tipo: string }) => {
 			const matchBusqueda =
 				busqueda.trim() === '' ||
 				e.titulo.toLowerCase().includes(busqueda.toLowerCase()) ||
-				e.alcaldia.toLowerCase().includes(busqueda.toLowerCase()) ||
-				e.lugar.toLowerCase().includes(busqueda.toLowerCase());
+				e.alcaldia.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+				(e.lugar ?? '').toLowerCase().includes(busqueda.toLowerCase());
 
 			const matchAlcaldia =
-				alcaldiaSeleccionada === 'todos' || e.alcaldiaSlug === alcaldiaSeleccionada;
+				alcaldiaSeleccionada === 'todos' || e.alcaldia.slug === alcaldiaSeleccionada;
 
 			const matchCategoria =
 				categoriaSeleccionada === 'todos' || tipoToSlug[e.tipo] === categoriaSeleccionada;
@@ -89,11 +90,11 @@
 				<ExperienceCard
 					id={exp.id}
 					titulo={exp.titulo}
-					lugar={exp.lugar}
-					alcaldia={exp.alcaldia}
+					lugar={exp.lugar ?? ''}
+					alcaldia={exp.alcaldia.nombre}
 					duracion={exp.duracion}
 					precio={exp.precio}
-					imagen={exp.imagen}
+					imagen={exp.imagen ?? ''}
 					rating={exp.rating}
 					numResenas={exp.numResenas}
 					tipo={exp.tipo}

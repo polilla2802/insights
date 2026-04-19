@@ -1,15 +1,33 @@
 <script lang="ts">
-	import { experiencias, alcaldias } from '$lib/data/mock';
+	interface Alcaldia {
+		slug: string;
+		nombre: string;
+	}
+
+	interface Experiencia {
+		id: string;
+		titulo: string;
+		lugar: string | null;
+		imagen: string | null;
+		precio: number;
+		rating: number;
+		numResenas: number;
+		duracion: number;
+		tipo: string;
+		alcaldia: { slug: string; nombre: string };
+	}
 
 	interface Props {
 		slug: string | null;
+		alcaldias: Alcaldia[];
+		experiencias: Experiencia[];
 		onclose?: () => void;
 	}
 
-	let { slug, onclose }: Props = $props();
+	let { slug, alcaldias, experiencias, onclose }: Props = $props();
 
 	const alcaldia = $derived(alcaldias.find((a) => a.slug === slug));
-	const exps = $derived(slug ? experiencias.filter((e) => e.alcaldiaSlug === slug) : []);
+	const exps = $derived(slug ? experiencias.filter((e) => e.alcaldia.slug === slug) : []);
 
 	const tipoLabel: Record<string, string> = {
 		RESTAURANTE: 'Gastronomía',
