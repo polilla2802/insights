@@ -29,7 +29,6 @@
 		"prisma:seed:prod": "dotenv -e .env.production -- tsx prisma/seed.ts"
 	},
 	"devDependencies": {
-		"@prisma/client": "^6.19.3",
 		"@sveltejs/adapter-auto": "^7.0.1",
 		"@sveltejs/kit": "^2.57.1",
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
@@ -52,6 +51,7 @@
 	},
 	"dependencies": {
 		"@iconify/svelte": "^5.2.1",
+		"@prisma/client": "^6.19.3",
 		"@types/leaflet": "^1.9.21",
 		"dotenv": "^17.4.2",
 		"firebase": "^12.12.0",
